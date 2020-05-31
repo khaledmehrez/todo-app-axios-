@@ -1,32 +1,33 @@
 import React, { Component } from 'react';
-import "./Todo.css"
+import "./todo.css"
 class Todo extends Component {
  
     render() {
-        const withoutArea=<div role="list" class="ui divided relaxed list">
-        <div role="listitem" class="item">
-          <i aria-hidden="true" class="github large icon middle aligned"></i>
-          <div class="content containerList">
+        const withoutArea=<div role="list" className="ui divided relaxed list componentTodo">
+        <div role="listitem" className="item">
+          <i aria-hidden="true" className="github large icon middle aligned"></i>
+          <div className="content containerList">
               <div>
-            <h1 class="header">{this.props.Data.title}</h1>
-            <p class="description">{this.props.Data.time}</p>
+            <h1 className="header">{this.props.Data.title}</h1>
+            <p className="description">{this.props.Data.time}</p>
             </div>
-            <button class="ui icon button" onClick={()=>this.props.delete(this.props.Data.id)} >X</button>
-            <button class="ui icon button" onClick={()=>this.props.edit(this.props.Data.id)} >e</button>
+            <button className="ui icon button" onClick={()=>this.props.delete(this.props.Data.id)} >X</button>
+            <button className="ui icon button" onClick={this.props.showeditInput} >e</button>
           </div>
         </div>
         </div>
         
-        const withArea=<div role="list" class="ui divided relaxed list">
+        const withArea=<div role="list" className="ui divided relaxed list">
         <div role="listitem" class="item">
-          <i aria-hidden="true" class="github large icon middle aligned"></i>
-          <div class="content containerList">
+          <i aria-hidden="true" className="github large icon middle aligned"></i>
+          <div className="content containerList">
               <div>
-            <h1 class="header">{this.props.Data.title}</h1>
-            <p class="description">{this.props.Data.time}</p>
+            <h1 className="header">{this.props.Data.title}</h1>
+            <p className="description">{this.props.Data.time}</p>
             </div>
-            <button class="ui icon button" onClick={()=>this.props.delete(this.props.Data.id)} >X</button>
-            <div class="ui focus input"><input type="text" placeholder="Search..." /></div>
+            <button className="ui icon button" onClick={()=>this.props.delete(this.props.Data.id)} >X</button>
+            <div className="ui focus input"><input type="text" placeholder="edit your to do" onChange={this.props.handlechangeEdit} /></div>
+            <button className="ui icon button" onClick={()=>this.props.edit(this.props.Data.id)} >edit</button>
           </div>
         </div>
         </div>

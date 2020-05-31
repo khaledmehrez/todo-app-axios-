@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Todo from './Todo';
+import "./App.css"
 class App extends Component {
   state={todo:[],
          textInput:"",
-        showText:true}
+        showText:true,
+      textEdit:""}
 
   handlechange=(e)=>{
    let text=e.target.value
@@ -33,10 +35,28 @@ console.log(this.state.textInput)
     })
     window.location.reload(false);
   }
-  edit=(j)=>{
-    this.setState({showText:false})
-
+  handlechangeEdit=(e)=>{
+ let textedit=e.target.value
+ this.setState({textEdit:textedit})
+ console.log(this.state.textEdit)
   }
+  showeditInput=()=>{
+    
+    this.setState({showText:false})
+   
+    }
+  edit=(j)=>{
+    console.log(j)
+    axios.put(`http://localhost:4000/posts/${j}`,{title:this.state.textEdit,time:new Date().toLocaleString()})
+    .then(res => {
+      console.log(res);
+      console.log(res.data.list);
+      
+    })
+    window.location.reload(false);
+  }
+
+  
   componentDidMount(){
     axios.get(`	http://localhost:4000/posts`)
     .then(res => {
@@ -51,7 +71,8 @@ console.log(this.state.textInput)
     console.log(this.state.todo)
     
     return (
-      <div>
+      <body>
+      <div class="principal">
           
         <div class="ui input segment">
           <input type="text" placeholder="add..." onChange={this.handlechange} />
@@ -59,9 +80,10 @@ console.log(this.state.textInput)
           </div>
         
        
-        { this.state.todo.map(el => <Todo Data={el} delete={this.delete} edit={this.edit} showText={this.state.showText}/>)}
+        { this.state.todo.map(el => <Todo Data={el} delete={this.delete} edit={this.edit} handlechangeEdit={this.handlechangeEdit} showeditInput={this.showeditInput} showText={this.state.showText} />)}
       
       </div>
+      </body>
     );
   }
 }
