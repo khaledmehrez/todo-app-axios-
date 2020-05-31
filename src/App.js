@@ -3,7 +3,8 @@ import axios from 'axios';
 import Todo from './Todo';
 class App extends Component {
   state={todo:[],
-         textInput:""}
+         textInput:"",
+        showText:true}
 
   handlechange=(e)=>{
    let text=e.target.value
@@ -12,25 +13,32 @@ console.log(this.state.textInput)
   }
   postList=()=>{
     let title=this.state.textInput
+    let time=new Date().toLocaleString()
    
     
-    axios.post(`http://localhost:3000/posts`, {  title})
+    axios.post(`http://localhost:4000/posts`, {  title,time})
     .then(res => {
       console.log(res);
       console.log(res.data.list);
     })
     window.location.reload(false);
   }
-  delete=(i)=>{
-    axios.delete(`http://localhost:3000/posts`)
+  delete=(i)=>{console.log(i)
+    
+    axios.delete(`http://localhost:4000/posts/${i}`)
     .then(res => {
       console.log(res);
       console.log(res.data.list);
-      console.log(i)
+      
     })
+    window.location.reload(false);
+  }
+  edit=(j)=>{
+    this.setState({showText:false})
+
   }
   componentDidMount(){
-    axios.get(`	http://localhost:3000/posts`)
+    axios.get(`	http://localhost:4000/posts`)
     .then(res => {
       
       
@@ -51,7 +59,7 @@ console.log(this.state.textInput)
           </div>
         
        
-        { this.state.todo.map(el => <Todo title={el.title} id={el.id} delete={this.delete}/>)}
+        { this.state.todo.map(el => <Todo Data={el} delete={this.delete} edit={this.edit} showText={this.state.showText}/>)}
       
       </div>
     );
